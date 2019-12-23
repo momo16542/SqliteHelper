@@ -13,20 +13,21 @@ namespace SqliteHelper
     class SqliteHelper
     {
 
-        private readonly string dataBaseName;
+        private readonly string dataBaseName = "DbfSqlite";
         private readonly string tableName;
         private readonly string directory = @"C:\Temps\Pivot\";
+        private readonly string path = $@"C:\Temps\Pivot\DbfSqlite.db";
         private string insertColumnString;
         private string insertParameterString;
         public List<string> ParameterList { get; set; }
         public string ConnectionString { get { return "Data source=" + directory + dataBaseName + ".db"; } }
         private string FullPath { get { return directory + dataBaseName + ".db"; } }
 
-        public SqliteHelper(string tableName)
+        public SqliteHelper(string tableName, bool needCreateNew)
         {
             this.tableName = tableName;
             CheckDirectory(directory);
-            dataBaseName = CheckFile(tableName);
+            CheckFile(needCreateNew);
         }
         public void InsertOne(OdbcDataReader reader)
         {
@@ -34,7 +35,6 @@ namespace SqliteHelper
             DataTable dt = reader.GetSchemaTable();
             if (dt != null)
             {
-                //string colstr = helper.CreateColumnStringBySqlReaderSchema(資料表名稱[no], dt);
                 string colstr = CreateColumnStringBySqlReaderSchema(dt);
                 CreateTable(tableName, colstr);
             }
@@ -121,55 +121,47 @@ namespace SqliteHelper
             var numericPrecision = dataRow["NumericPrecision"].ToString().Trim();
             var numericScale = dataRow["NumericScale"].ToString().Trim();
             string colType = "";
-            //if (dataColumnType == "tinyint" || dataColumnType == "int" || dataColumnType == "smallint")
-            //{
-            //    colType = "INTEGER";
-            //}
-            //else if (dataColumnType == "decimal" || dataColumnType == "money")
-            //{
-
-            //    colType = $"INTEGER";
-            //}
-            //else if (dataColumnType == "char" || dataColumnType == "varchar" || dataColumnType == "nvarchar")
-            //{
-            //    colType = $"{dataColumnType}({columnSize})";
-            //}
-            //else if (dataColumnType == "datetime")
-            //{
-            //    colType = "Text";
-            //}
-            if (dataColumnType == "System.Int16" || dataColumnType == "System.Int32")
+            if (dataColumnType == "tinyint" || dataColumnType == "int" || dataColumnType == "smallint" || dataColumnType == "bit" ||
+                dataColumnType == "System.Int32"|| dataColumnType == "System.Int16")
             {
                 colType = "INTEGER";
             }
-            else if (dataColumnType == "System.Decimal")
+            else if (dataColumnType == "decimal" || dataColumnType == "System.Decimal")
             {
-
-                colType = $"INTEGER";
+                colType = "Real";
             }
-            else if (dataColumnType == "System.String")
+            else if (dataColumnType == "money" || dataColumnType == "smallmoney")
             {
-                //colType = $"{dataColumnType}({columnSize})";   
+                colType = "Real";
+            }
+            else if (dataColumnType == "char" || dataColumnType == "varchar" || dataColumnType == "nvarchar" || dataColumnType == "nchar"||
+                dataColumnType == "System.String")
+            {
                 colType = "Text";
+                //colType = $"{dataColumnType}({columnSize})";
             }
-            else if (dataColumnType == "System.DateTime")
+            else if (dataColumnType == "datetime" || dataColumnType == "System.DateTime")
             {
-                colType = "Text";
+                //colType = "Text";
+                colType = "datetime";
             }
-
             else { throw new Exception(dataColumnType + " not in list"); }
             return colType;
         }
-        private string CheckFile(string tableName)
+        private void CheckFile(bool createNew)
         {
-            string fileName = tableName;
-            string path = $"{directory}\\{fileName}.db";
-            if (File.Exists(path))
+            var isExist = File.Exists(path);
+            if (createNew)
             {
-                File.Delete(path);
+                if (isExist)
+                {
+                    File.Delete(path);
+                }
             }
-            SQLiteConnection.CreateFile(fileName);
-            return fileName;
+            if (!isExist)
+            {
+                SQLiteConnection.CreateFile(path);
+            }
         }
         private void CheckDirectory(string directory)
         {

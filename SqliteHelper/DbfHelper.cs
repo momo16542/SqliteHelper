@@ -39,7 +39,7 @@ namespace SqliteHelper
                 + dataBase + "; Exclusive=No; Collate=Machine; NULL=Yes; DELETED=Yes; BACKGROUNDFETCH=Yes;";
             }
         }
-        public void ToSqlite()
+        public void ToSqlite(bool needCreateNew = false)
         {
             string odbcString = $"select * from {dataBase}";
             using (OdbcConnection conn = new OdbcConnection(Connection))
@@ -48,8 +48,7 @@ namespace SqliteHelper
                 {
                     conn.Open();
                     OdbcDataReader reader = cmd.ExecuteReader();
-                    var schema = reader.GetSchemaTable();
-                    SqliteHelper sqliteHelper = new SqliteHelper(tableName);
+                    SqliteHelper sqliteHelper = new SqliteHelper(tableName, needCreateNew);
                     sqliteHelper.InsertOne(reader);
                     reader.Close();
                 }
