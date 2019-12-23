@@ -15,6 +15,7 @@ namespace ConsoleApp1
            var qq= dbfToSqlite.ConvertDbfToSqlite("sal_qry1");
             Console.Write(qq);
             Console.Read();
+
         }
     }
 }
