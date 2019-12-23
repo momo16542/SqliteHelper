@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace SqliteHelper
 {
-    //[ClassInterface(ClassInterfaceType.AutoDual)] //雖然不明白這行，但查詢文件都要加上此行
-    //[ProgId("SqliteHelper.DbfToSqlite")]
+    [ComVisible(true)]
+    [ClassInterface(ClassInterfaceType.AutoDual)] //雖然不明白這行，但查詢文件都要加上此行
+    [ProgId("SqliteHelper.DbfToSqlite")]
     public class DbfToSqlite
     {
         public bool ConvertDbfToSqlite(string name)
