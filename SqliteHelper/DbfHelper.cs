@@ -10,12 +10,12 @@ namespace SqliteHelper
 {
     class DbfHelper
     {
-        string dataBase;
-        string tableName;
-        public DbfHelper(string dataBase, string tableName)
+        string dbfPath;
+        string dbfTableName;
+        public DbfHelper(string dbfPath, string dbfTableName)
         {
-            this.dataBase = dataBase;
-            this.tableName = tableName;
+            this.dbfPath = dbfPath;
+            this.dbfTableName = dbfTableName;
         }
         private OdbcConnection OdbcDbfOpenConn(string Database)
         {
@@ -36,20 +36,21 @@ namespace SqliteHelper
             get
             {
                 return "Driver={Microsoft Visual FoxPro Driver}; SourceType=DBF; SourceDB="
-                + dataBase + "; Exclusive=No; Collate=Machine; NULL=Yes; DELETED=Yes; BACKGROUNDFETCH=Yes;";
+                + dbfPath + "; Exclusive=No; Collate=Machine; NULL=Yes; DELETED=Yes; BACKGROUNDFETCH=Yes;";
             }
         }
-        public void ToSqlite(bool needCreateNew = false)
+        public void ToSqlite(string sqliteFileName)
         {
-            string odbcString = $"select * from {dataBase}";
+            string odbcString = $"select * from {dbfPath}";
             using (OdbcConnection conn = new OdbcConnection(Connection))
             {
                 using (OdbcCommand cmd = new OdbcCommand(odbcString, conn))
                 {
                     conn.Open();
                     OdbcDataReader reader = cmd.ExecuteReader();
-                    SqliteHelper sqliteHelper = new SqliteHelper(tableName, needCreateNew);
-                    sqliteHelper.InsertOne(reader);
+                    var schema = reader.GetSchemaTable();
+                    SqliteHelper sqliteHelper = new SqliteHelper(sqliteFileName);
+                    sqliteHelper.InsertOne(reader, dbfTableName);
                     reader.Close();
                 }
             }

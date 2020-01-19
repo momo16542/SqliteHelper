@@ -11,9 +11,22 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            DbfToSqlite dbfToSqlite = new DbfToSqlite();
-           var qq= dbfToSqlite.ConvertDbfToSqlite("sal_qry1");
-            Console.Write(qq);
+            Console.WriteLine("Type: 1:Normal 2:Pivot");
+            var type = Console.ReadLine();
+            Console.WriteLine("DBF Name");
+            var name = Console.ReadLine();
+            if (type.StartsWith("1"))
+            {
+                DbfToSqlite dbfToSqlite = new DbfToSqlite();
+                var qq = dbfToSqlite.ConvertDbfToSqlite(name, "UnitTest");
+                Console.Write(qq);
+            }
+            else if (type.StartsWith("2"))
+            {
+                DbfToSqlite dbfToSqlite = new DbfToSqlite();
+                var qq = dbfToSqlite.ConvertDbfToSqlite("sal_qry1", "PivotSource");
+                Console.Write(qq);
+            }
             Console.Read();
 
         }

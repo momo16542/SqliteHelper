@@ -12,29 +12,27 @@ namespace SqliteHelper
 {
     class SqliteHelper
     {
+        private readonly string databaseName;
 
-        private readonly string dataBaseName = "DbfSqlite";
-        private readonly string tableName;
         private readonly string directory = @"C:\Temps\Pivot\";
-        private readonly string path = $@"C:\Temps\Pivot\DbfSqlite.db";
         private string insertColumnString;
         private string insertParameterString;
         public List<string> ParameterList { get; set; }
-        public string ConnectionString { get { return "Data source=" + directory + dataBaseName + ".db"; } }
-        private string FullPath { get { return directory + dataBaseName + ".db"; } }
+        public string ConnectionString { get { return "Data source=" + directory + databaseName + ".db"; } }
+        private string FullPath { get { return directory + databaseName + ".db"; } }
 
-        public SqliteHelper(string tableName, bool needCreateNew)
+        public SqliteHelper(string databaseName)
         {
-            this.tableName = tableName;
             CheckDirectory(directory);
-            CheckFile(needCreateNew);
+            this.databaseName = databaseName;
+            CheckFile(databaseName);
         }
-        public void InsertOne(OdbcDataReader reader)
+        public void InsertOne(OdbcDataReader reader, string tableName)
         {
-
             DataTable dt = reader.GetSchemaTable();
             if (dt != null)
             {
+                //string colstr = helper.CreateColumnStringBySqlReaderSchema(資料表名稱[no], dt);
                 string colstr = CreateColumnStringBySqlReaderSchema(dt);
                 CreateTable(tableName, colstr);
             }
@@ -122,7 +120,7 @@ namespace SqliteHelper
             var numericScale = dataRow["NumericScale"].ToString().Trim();
             string colType = "";
             if (dataColumnType == "tinyint" || dataColumnType == "int" || dataColumnType == "smallint" || dataColumnType == "bit" ||
-                dataColumnType == "System.Int32"|| dataColumnType == "System.Int16")
+                dataColumnType == "System.Int32" || dataColumnType == "System.Int16")
             {
                 colType = "INTEGER";
             }
@@ -134,7 +132,7 @@ namespace SqliteHelper
             {
                 colType = "Real";
             }
-            else if (dataColumnType == "char" || dataColumnType == "varchar" || dataColumnType == "nvarchar" || dataColumnType == "nchar"||
+            else if (dataColumnType == "char" || dataColumnType == "varchar" || dataColumnType == "nvarchar" || dataColumnType == "nchar" ||
                 dataColumnType == "System.String")
             {
                 colType = "Text";
@@ -148,20 +146,24 @@ namespace SqliteHelper
             else { throw new Exception(dataColumnType + " not in list"); }
             return colType;
         }
-        private void CheckFile(bool createNew)
+        private void CheckFile(string databaseName, bool needDeelte = false)
         {
-            var isExist = File.Exists(path);
-            if (createNew)
+            string fileName = databaseName;
+            string path = $"{directory}\\{fileName}.db";
+            if (File.Exists(path))
             {
-                if (isExist)
+                if (needDeelte)
                 {
                     File.Delete(path);
+                    SQLiteConnection.CreateFile(fileName);
                 }
             }
-            if (!isExist)
+            else
             {
-                SQLiteConnection.CreateFile(path);
+                SQLiteConnection.CreateFile(fileName);
             }
+
+
         }
         private void CheckDirectory(string directory)
         {

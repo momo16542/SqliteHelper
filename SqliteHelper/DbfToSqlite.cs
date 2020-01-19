@@ -13,20 +13,36 @@ namespace SqliteHelper
     [ComVisible(true)]
     public class DbfToSqlite
     {
-        public bool ConvertDbfToSqlite(string name)
+        public bool ConvertDbfToSqlite(string dbfName, string sqliteName)
         {
-            var result = false;        
+            var result = false;
             try
             {
-                DbfHelper dbfHelper = new DbfHelper($@"C:\Temps\Pivot\{name}", name);
-                dbfHelper.ToSqlite();
+                DbfHelper dbfHelper = new DbfHelper($@"C:\Temps\DBF\{dbfName}", dbfName);
+                dbfHelper.ToSqlite(sqliteName);
                 result = true;
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
-                new DebugLog().WriteLog(ex.Message);                
+                Console.WriteLine($"Failed, {ex.Message}");
             }
+            Console.WriteLine("Success");
+            return result;
+        }
+        public bool ConvertDbfToSqlitePivot(string dbfName, string sqliteName)
+        {
+            var result = false;
+            try
+            {
+                DbfHelper dbfHelper = new DbfHelper($@"C:\Temps\Pivot\{dbfName}", dbfName);
+                dbfHelper.ToSqlite(sqliteName);
+                result = true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed, {ex.Message}");
+            }
+            Console.WriteLine("Success");
             return result;
         }
     }
