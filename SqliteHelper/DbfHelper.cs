@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SqliteHelper
 {
-    class DbfHelper
+    public class DbfHelper
     {
         string dbfPath;
         string dbfTableName;
@@ -39,7 +39,7 @@ namespace SqliteHelper
                 + dbfPath + "; Exclusive=No; Collate=Machine; NULL=Yes; DELETED=Yes; BACKGROUNDFETCH=Yes;";
             }
         }
-        public void ToSqlite(string sqliteFileName)
+        public void ToSqlite(string sqliteDirectory, string sqliteFileName)
         {
             string odbcString = $"select * from {dbfPath}";
             using (OdbcConnection conn = new OdbcConnection(Connection))
@@ -49,9 +49,24 @@ namespace SqliteHelper
                     conn.Open();
                     OdbcDataReader reader = cmd.ExecuteReader();
                     var schema = reader.GetSchemaTable();
-                    SqliteHelper sqliteHelper = new SqliteHelper(sqliteFileName);
+                    SqliteHelper sqliteHelper = new SqliteHelper(sqliteDirectory, sqliteFileName);
                     sqliteHelper.InsertOne(reader, dbfTableName);
                     reader.Close();
+                }
+            }
+        }
+        public DataTable GetTable()
+        {
+            string odbcString = $"select * from {dbfPath}";
+            using (OdbcConnection conn = new OdbcConnection(Connection))
+            {
+                using (OdbcCommand cmd = new OdbcCommand(odbcString, conn))
+                {
+                    conn.Open();
+                    OdbcDataAdapter adp = new OdbcDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    adp.Fill(dt);
+                    return dt;
                 }
             }
         }

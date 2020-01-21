@@ -10,22 +10,41 @@ using System.Threading.Tasks;
 
 namespace SqliteHelper
 {
-    class SqliteHelper
+    public class SqliteHelper
     {
         private readonly string databaseName;
 
-        private readonly string directory = @"C:\Temps\Pivot\";
+        private readonly string directory;/*= @"C:\Temps\Pivot\";*/
         private string insertColumnString;
         private string insertParameterString;
         public List<string> ParameterList { get; set; }
         public string ConnectionString { get { return "Data source=" + directory + databaseName + ".db"; } }
         private string FullPath { get { return directory + databaseName + ".db"; } }
 
-        public SqliteHelper(string databaseName)
+        public SqliteHelper(string directory, string databaseName)
         {
+            this.directory = directory;
             CheckDirectory(directory);
             this.databaseName = databaseName;
             CheckFile(databaseName);
+        }
+        public DataTable GetTable(string tableName)
+        {
+            using (var cn = new SQLiteConnection(ConnectionString))
+            {             
+                using (var cmd = cn.CreateCommand())
+                {
+                    cn.Open();
+                    cmd.CommandText = $"Select * from {tableName}";
+                    SQLiteDataAdapter adp= new SQLiteDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    adp.Fill(dt);
+                    return dt;
+                }
+
+            }
+
+           
         }
         public void InsertOne(OdbcDataReader reader, string tableName)
         {

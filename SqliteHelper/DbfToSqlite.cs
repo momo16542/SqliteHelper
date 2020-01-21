@@ -7,19 +7,19 @@ using System.Threading.Tasks;
 
 namespace SqliteHelper
 {
-    
+
     [ClassInterface(ClassInterfaceType.AutoDual)] //雖然不明白這行，但查詢文件都要加上此行
     [ProgId("SqliteHelper.DbfToSqlite")]
     [ComVisible(true)]
     public class DbfToSqlite
     {
-        public bool ConvertDbfToSqlite(string dbfName, string sqliteName)
+        public bool ConvertDbfToSqlite(string dbfDirectory, string dbfName,string sqliteDirectory, string sqliteName)
         {
             var result = false;
             try
             {
-                DbfHelper dbfHelper = new DbfHelper($@"C:\Temps\DBF\{dbfName}", dbfName);
-                dbfHelper.ToSqlite(sqliteName);
+                DbfHelper dbfHelper = new DbfHelper($@"{dbfDirectory}\{dbfName}", dbfName);
+                dbfHelper.ToSqlite(sqliteDirectory, sqliteName);
                 result = true;
             }
             catch (Exception ex)
@@ -35,7 +35,7 @@ namespace SqliteHelper
             try
             {
                 DbfHelper dbfHelper = new DbfHelper($@"C:\Temps\Pivot\{dbfName}", dbfName);
-                dbfHelper.ToSqlite(sqliteName);
+                dbfHelper.ToSqlite(@"C:\Temps\Pivot", sqliteName);
                 result = true;
             }
             catch (Exception ex)

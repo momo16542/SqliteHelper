@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "DbfToSqliteSetup", "DbfToSqliteSetup\DbfToSqliteSetup.vdproj", "{2A7EA23E-4735-45BB-823D-84333393EEC4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqliteHelperTests", "SqliteHelperTests\SqliteHelperTests.csproj", "{B1EB6A28-6E58-4FBB-A2F4-5BBB4440B275}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,14 @@ Global
 		{2A7EA23E-4735-45BB-823D-84333393EEC4}.Debug|x86.ActiveCfg = Debug
 		{2A7EA23E-4735-45BB-823D-84333393EEC4}.Release|Any CPU.ActiveCfg = Release
 		{2A7EA23E-4735-45BB-823D-84333393EEC4}.Release|x86.ActiveCfg = Release
+		{B1EB6A28-6E58-4FBB-A2F4-5BBB4440B275}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1EB6A28-6E58-4FBB-A2F4-5BBB4440B275}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1EB6A28-6E58-4FBB-A2F4-5BBB4440B275}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B1EB6A28-6E58-4FBB-A2F4-5BBB4440B275}.Debug|x86.Build.0 = Debug|Any CPU
+		{B1EB6A28-6E58-4FBB-A2F4-5BBB4440B275}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1EB6A28-6E58-4FBB-A2F4-5BBB4440B275}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1EB6A28-6E58-4FBB-A2F4-5BBB4440B275}.Release|x86.ActiveCfg = Release|Any CPU
+		{B1EB6A28-6E58-4FBB-A2F4-5BBB4440B275}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
