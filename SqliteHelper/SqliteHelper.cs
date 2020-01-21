@@ -162,6 +162,11 @@ namespace SqliteHelper
                 //colType = "Text";
                 colType = "datetime";
             }
+            else if (dataColumnType == "System.Boolean")
+            {
+                
+                colType = "boolean";
+            }
             else { throw new Exception(dataColumnType + " not in list"); }
             return colType;
         }

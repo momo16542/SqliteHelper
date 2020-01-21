@@ -21,5 +21,15 @@ namespace SqliteHelper.Tests
             var dt1 = sqliteHelper.GetTable(tableName);
             Assert.AreEqual(dt.Rows.Count, dt1.Rows.Count);
         }
+        [TestMethod()]
+        public void GetTableTest1()
+        {
+            string tableName = "Invbkm";
+            DbfHelper dbfHelper = new DbfHelper($@"C:\temps\dbf\dbfhelperUnitTest\{tableName}", tableName);
+            var dt = dbfHelper.GetTable();
+            SqliteHelper sqliteHelper = new SqliteHelper($@"C:\temps\dbf\dbfhelperUnitTest\", "UnitTest");
+            var dt1 = sqliteHelper.GetTable(tableName);
+            Assert.AreEqual(dt.Rows.Count, dt1.Rows.Count);
+        }
     }
 }

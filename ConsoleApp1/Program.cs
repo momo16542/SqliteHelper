@@ -21,6 +21,10 @@ namespace ConsoleApp1
             list.Add("Sqlresult6");
             list.Add("Sqlresult7");
             list.Add("Sqlresult8");
+            list.Add("invbkm");
+            list.Add("invbkm2");
+            list.Add("invbkd");
+            list.Add("invbkd2");
             DbfToSqlite dbfToSqlite = new DbfToSqlite();
             foreach (var item in list)
             {
