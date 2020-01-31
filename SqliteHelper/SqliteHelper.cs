@@ -31,12 +31,12 @@ namespace SqliteHelper
         public DataTable GetTable(string tableName)
         {
             using (var cn = new SQLiteConnection(ConnectionString))
-            {             
+            {
                 using (var cmd = cn.CreateCommand())
                 {
                     cn.Open();
                     cmd.CommandText = $"Select * from {tableName}";
-                    SQLiteDataAdapter adp= new SQLiteDataAdapter(cmd);
+                    SQLiteDataAdapter adp = new SQLiteDataAdapter(cmd);
                     DataTable dt = new DataTable();
                     adp.Fill(dt);
                     return dt;
@@ -44,7 +44,7 @@ namespace SqliteHelper
 
             }
 
-           
+
         }
         public void InsertOne(OdbcDataReader reader, string tableName)
         {
@@ -138,10 +138,25 @@ namespace SqliteHelper
             var numericPrecision = dataRow["NumericPrecision"].ToString().Trim();
             var numericScale = dataRow["NumericScale"].ToString().Trim();
             string colType = "";
-            if (dataColumnType == "tinyint" || dataColumnType == "int" || dataColumnType == "smallint" || dataColumnType == "bit" ||
-                dataColumnType == "System.Int32" || dataColumnType == "System.Int16")
+            if (dataColumnType == "int" || dataColumnType == "System.Int32")
             {
-                colType = "INTEGER";
+                colType = "INT";
+            }
+            else if (dataColumnType == "tinyint")
+            {
+                colType = "TINYINT";
+            }
+            else if (dataColumnType == "smallint")
+            {
+                colType = "SMALLINT";
+            }
+            else if (dataColumnType == "System.Int16")
+            {
+                colType = "INT16";
+            }
+            else if (dataColumnType == "bit" )
+            {
+                colType = "bit";
             }
             else if (dataColumnType == "decimal" || dataColumnType == "System.Decimal")
             {
@@ -164,7 +179,7 @@ namespace SqliteHelper
             }
             else if (dataColumnType == "System.Boolean")
             {
-                
+
                 colType = "boolean";
             }
             else { throw new Exception(dataColumnType + " not in list"); }

@@ -11,6 +11,30 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
+            var list = GetInvstk();
+            DbfToSqlite dbfToSqlite = new DbfToSqlite();
+            foreach (var item in list)
+            {
+                dbfToSqlite.ConvertDbfToSqlite(@"C:\temps\dbf\", item, @"C:\temps\dbf\unittest\", "UnitTest");
+            }
+            Console.Read();
+        }
+        private static List<string> GetInvstk()
+        {
+            List<string> list = new List<string>();
+            list.Add("Invstk11");
+            list.Add("Invstk12");
+            list.Add("Invstk13");
+            list.Add("Invstk14");        
+            list.Add("tmpmoverec");
+            list.Add("tmpmoverec1");
+            list.Add("tmpmoverec2");
+            list.Add("tmpmoverec3");
+            list.Add("tmpmoverec4");
+            return list;
+        }
+        private static List<string> GetInvbk()
+        {
             List<string> list = new List<string>();
             list.Add("Sqlresult");
             list.Add("Sqlresult1");
@@ -25,12 +49,7 @@ namespace ConsoleApp1
             list.Add("invbkm2");
             list.Add("invbkd");
             list.Add("invbkd2");
-            DbfToSqlite dbfToSqlite = new DbfToSqlite();
-            foreach (var item in list)
-            {
-                dbfToSqlite.ConvertDbfToSqlite(@"C:\temps\dbf\", item, @"C:\temps\dbf\unittest\", "UnitTest");
-            }
-            Console.Read();
+            return list;
         }
         private static void Normal()
         {
