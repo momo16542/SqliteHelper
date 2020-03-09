@@ -11,26 +11,23 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            var list = GetInvstk();
+            var list = GetReceiving();
             DbfToSqlite dbfToSqlite = new DbfToSqlite();
             foreach (var item in list)
             {
-                dbfToSqlite.ConvertDbfToSqlite(@"C:\temps\dbf\", item, @"C:\temps\dbf\unittest\", "UnitTest");
+                dbfToSqlite.ConvertDbfToSqlite(@"C:\temps\dbf\", item, @"C:\temps\dbf\unittest\", "Cost_CalculateReceiving");
             }
             Console.Read();
         }
-        private static List<string> GetInvstk()
+        private static List<string> GetReceiving()
         {
             List<string> list = new List<string>();
-            list.Add("Invstk11");
-            list.Add("Invstk12");
-            list.Add("Invstk13");
-            list.Add("Invstk14");        
-            list.Add("tmpmoverec");
-            list.Add("tmpmoverec1");
-            list.Add("tmpmoverec2");
-            list.Add("tmpmoverec3");
-            list.Add("tmpmoverec4");
+            list.Add("Tmp進貨主檔");
+            list.Add("Tmp進貨單");
+            list.Add("Tmp進貨費用");
+            list.Add("Tmp進貨主檔1");
+            list.Add("Tmp進貨單1");
+            list.Add("Tmp進貨費用1");
             return list;
         }
         private static List<string> GetInvbk()
