@@ -11,23 +11,105 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            var list = GetReceiving();
+            var list = Getmrp(out string sqliteName);
             DbfToSqlite dbfToSqlite = new DbfToSqlite();
             foreach (var item in list)
             {
-                dbfToSqlite.ConvertDbfToSqlite(@"C:\temps\dbf\", item, @"C:\temps\dbf\unittest\", "Cost_CalculateReceiving");
+                dbfToSqlite.ConvertDbfToSqlite(@"C:\temps\dbf\MRP", item, @"C:\temps\dbf\unittest\", sqliteName);
             }
             Console.Read();
         }
-        private static List<string> GetReceiving()
+        private static List<string> Getmrp(out string sqliteName)
+        {
+            sqliteName = "Mrp";
+            List<string> list = new List<string>();
+            list.Add("tmpmoverec");
+            list.Add("tmpmoverec1");
+            list.Add("tmpmoverec2");
+            list.Add("tmpmoverec3");
+            list.Add("tmpmoverec4");
+            list.Add("tmpmoverec5");
+            list.Add("tmpmoverec6");
+            list.Add("tmpmoverec7");
+            list.Add("tmpmoverec8");
+            list.Add("tmpmoverec9");
+            list.Add("tmpmoverec10");
+            list.Add("tmpmoverec11");
+            list.Add("tmpmoverec12");
+            list.Add("tmpmoverec13");
+            list.Add("tmpmoverec14");
+            list.Add("獨立需求表");
+            list.Add("獨立彙總表");
+            list.Add("相依需求表");
+            list.Add("相依彙總表");
+            list.Add("MRP在庫量");
+            list.Add("MRP在庫量彙總表");
+            list.Add("MRP待驗量");
+            list.Add("MRP待驗量彙總表");
+            list.Add("MRP訂購未交表");
+            list.Add("MRP訂購彙總表");
+            list.Add("MRP生產未交表");
+            list.Add("MRP生產彙總表");
+            list.Add("MRP保留量表");
+            list.Add("MRP保留量彙總表");
+            list.Add("MRP計算品號表");
+            list.Add("MRP查詢明細");
+            list.Add("MRP建議表");
+            return list;
+
+        }
+        private static List<string> GetBom_purp(out string sqliteName)
+        {
+            sqliteName = "Bom_purp";
+            List<string> list = new List<string>();
+            list.Add("tmpmoverec");
+            list.Add("tmpmoverec1");
+            list.Add("tmpmoverec2");
+            list.Add("tmpmoverec3");
+            list.Add("用途表主檔");
+            list.Add("用途表明細");
+            return list;
+        }
+        private static List<string> GetBom_cost(out string sqliteName)
+        {
+            sqliteName = "Bom_cost";
+            List<string> list = new List<string>();
+            list.Add("tmpmoverec");
+            list.Add("tmpmoverec1");
+            list.Add("tmp製程表");
+            return list;
+        }
+        private static List<string> GetCostDetail(out string sqliteName)
+        {
+            sqliteName = "Cost_CostDetail";
+            List<string> list = new List<string>();
+            list.Add("TMP單位成本表_不分倉庫");
+            list.Add("TMPINVENT1");
+            list.Add("TMPSTKBAS");
+            list.Add("TMP前期財務");
+            list.Add("成本主檔");
+            list.Add("成本明細");
+            list.Add("TRADELST");
+            return list;
+        }
+        private static List<string> GetCalculateCost()
         {
             List<string> list = new List<string>();
-            list.Add("Tmp進貨主檔");
-            list.Add("Tmp進貨單");
-            list.Add("Tmp進貨費用");
-            list.Add("Tmp進貨主檔1");
-            list.Add("Tmp進貨單1");
-            list.Add("Tmp進貨費用1");
+            list.Add("TMP倉儲表");
+            list.Add("TMPINVENT");
+            list.Add("TP_加工回收單");
+            list.Add("TRADELST");
+            list.Add("TMP單位成本表_不分倉庫");
+            return list;
+        }
+        private static List<string> GetSearchCurrentPeriod()
+        {
+            List<string> list = new List<string>();
+            list.Add("tmpsplace11");
+            list.Add("Sqlresult");
+            list.Add("tmpmoverec");
+            list.Add("TRADELST1");
+            list.Add("最近成本表1");
             return list;
         }
         private static List<string> GetInvbk()
