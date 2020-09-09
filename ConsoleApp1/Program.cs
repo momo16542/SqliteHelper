@@ -11,13 +11,20 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            var list = Getmrp(out string sqliteName);
+            var list = GetParameters(out string sqliteName);
             DbfToSqlite dbfToSqlite = new DbfToSqlite();
             foreach (var item in list)
             {
-                dbfToSqlite.ConvertDbfToSqlite(@"C:\temps\dbf\MRP", item, @"C:\temps\dbf\unittest\", sqliteName);
+                dbfToSqlite.ConvertDbfToSqlite(@"C:\temps\dbf", item, @"C:\temps\dbf\unittest\", sqliteName);
             }
             Console.Read();
+        }
+        private static List<string> GetParameters(out string sqliteName)
+        {
+            sqliteName = "NogiParameters";
+            List<string> list = new List<string>();
+            list.Add("lcl系統參數表");
+            return list;
         }
         private static List<string> Getmrp(out string sqliteName)
         {
