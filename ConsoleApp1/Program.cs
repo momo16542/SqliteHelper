@@ -11,13 +11,23 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            var list = GetBalance(out string sqliteName);
+            var list = GetBOLPrint(out string sqliteName);
             DbfToSqlite dbfToSqlite = new DbfToSqlite();
             foreach (var item in list)
             {
-                dbfToSqlite.ConvertDbfToSqlite(@"C:\temps\dbf\balance", item, @"C:\temps\dbf\unittest\", sqliteName);
+                dbfToSqlite.ConvertDbfToSqlite(@"C:\temps\dbf\bolprint", item, @"C:\temps\dbf\unittest\", sqliteName);
             }
             Console.Read();
+        }
+        private static List<string> GetBOLPrint(out string sqliteName)
+        {
+            sqliteName = "BOLPrint";
+            List<string> list = new List<string>();
+            list.Add("EDICUSTLIST");
+            list.Add("lable_result");
+            list.Add("ASNLABELSTXT");        
+
+            return list;
         }
         private static List<string> GetBalance(out string sqliteName)
         {
