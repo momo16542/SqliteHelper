@@ -17,7 +17,8 @@ namespace ConsoleApp1
             {
                 dbfToSqlite.ConvertDbfToSqlite(@"C:\temps\dbf\vendordefect", item, @"C:\temps\dbf\unittest\", sqliteName);
             }
-            Console.Read();
+            Console.Read(); 
+
         }
         private static List<string> GetVendorInspect(out string sqliteName)
         {
