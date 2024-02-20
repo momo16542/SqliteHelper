@@ -11,13 +11,37 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            var list = GetBOLPrint(out string sqliteName);
+            var list = GetVendorInspect(out string sqliteName);
             DbfToSqlite dbfToSqlite = new DbfToSqlite();
             foreach (var item in list)
             {
-                dbfToSqlite.ConvertDbfToSqlite(@"C:\temps\dbf\bolprint", item, @"C:\temps\dbf\unittest\", sqliteName);
+                dbfToSqlite.ConvertDbfToSqlite(@"C:\temps\dbf\vendordefect", item, @"C:\temps\dbf\unittest\", sqliteName);
             }
             Console.Read();
+        }
+        private static List<string> GetVendorInspect(out string sqliteName)
+        {
+            sqliteName = "VendorDefect";
+            List<string> list = new List<string>();
+            list.Add("tmp");
+            list.Add("tmp1");
+            list.Add("tmp2");
+            list.Add("PUQRY2日期");
+            list.Add("PUQRY2延交");
+            list.Add("PUQRY2廠商");
+            list.Add("PUQRY2不良");
+            return list;
+        }
+        private static List<string> GetVendorFillRate(out string sqliteName)
+        {
+            sqliteName = "VendorFillRate";
+            List<string> list = new List<string>();
+            list.Add("tmp");
+            list.Add("tmp1");
+            list.Add("PUQRY3延交");
+            list.Add("PUQRY3廠商");
+
+            return list;
         }
         private static List<string> GetBOLPrint(out string sqliteName)
         {
